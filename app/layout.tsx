@@ -4,6 +4,7 @@ import Header from "@/app/components/layout/header/Header";
 import { monoFont, sansFont } from "@/configs/fonts";
 import theme from "@/configs/theme";
 
+import { CssBaseline } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body
         className={`${sansFont.variable} ${monoFont.variable} bg-zinc-50 font-mono antialiased`}
       >
+        <CssBaseline />
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <Header />

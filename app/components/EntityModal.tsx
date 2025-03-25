@@ -85,7 +85,7 @@ export function EntityModal<T extends Entity>({
         Edit {name}
       </Button>
       <Modal open={modalOpen} onClose={handleModalClose}>
-        <div className="absolute top-1/2 left-1/2 z-10 h-[600px] w-[400px] -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded border border-black bg-white p-4 shadow-2xl">
+        <div className="absolute top-1/2 left-1/2 z-10 h-5/6 max-h-150 w-4/6 max-w-100 -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded border border-black bg-white p-4 shadow-2xl">
           <h2>Edit {name}</h2>
           <Divider className="pt-5" />
           <div className="mt-5">

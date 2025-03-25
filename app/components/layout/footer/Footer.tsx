@@ -2,7 +2,7 @@
 
 const Footer = () => {
   return (
-    <footer className="mt-25 mb-10 text-center">
+    <footer className="mt-15 mb-10 text-center sm:mt-25 sm:mb-10">
       <a
         href="https://github.com/hirbu/"
         target="_blank"

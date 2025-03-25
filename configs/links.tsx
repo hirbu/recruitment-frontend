@@ -23,7 +23,6 @@ const links = [
     title: "Account",
     uri: "/account/login",
     icon: <PersonIcon />,
-    right: true,
   },
 ];
 

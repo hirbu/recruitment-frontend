@@ -113,11 +113,16 @@ const FieldsInput = ({
       {fields.map((field, index) => (
         <div
           key={field}
-          className="flex gap-2 rounded-md border border-[rgba(0,0,0,0.25)] p-3"
+          className="flex flex-col gap-2 rounded-md border border-[rgba(0,0,0,0.25)] p-3 sm:flex-row"
         >
-          <FormatColorTextIcon />
-          <div className="flex-1">{field}</div>
-          <div className="flex flex-row">
+          <div className="flex flex-1 gap-3">
+            <FormatColorTextIcon />
+            <div className="flex-1">{field}</div>
+          </div>
+          <div className="my-2 sm:hidden">
+            <Divider />
+          </div>
+          <div className="flex flex-row justify-center">
             <Button
               onClick={() => handleFieldMoveUp(field)}
               size="small"
@@ -175,7 +180,7 @@ const FieldsInput = ({
         }}
       />
       <Modal open={openEditFieldModal} onClose={handleEditFieldModalClose}>
-        <div className="absolute top-1/2 left-1/2 z-10 w-[400px] -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded border border-black bg-white p-4 shadow-2xl">
+        <div className="absolute top-1/2 left-1/2 z-10 w-4/6 max-w-100 -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded border border-black bg-white p-4 shadow-2xl">
           <h2>Edit field</h2>
           <Divider className="pt-5" />
           <div className="mt-5">

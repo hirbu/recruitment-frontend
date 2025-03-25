@@ -102,7 +102,7 @@ const AddPosting = () => {
               setDescription={setDescription}
             />
 
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <div className="flex-6">
                 <TagsSelect tags={tags} setTags={setTags} />
               </div>
