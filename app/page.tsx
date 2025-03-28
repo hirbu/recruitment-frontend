@@ -26,12 +26,13 @@ export default function Home() {
     currentPage: pagination.current ?? 1,
   });
 
-  const debouncedSetTitle = useCallback((value: string) => {
-    const delayedUpdate = debounce((val: string) => {
-      setDebouncedTitle(val);
-    }, 500);
-    delayedUpdate(value);
-  }, []);
+  // Create a properly memoized debounce function
+  const debouncedSetTitle = useCallback(
+    debounce((value: string) => {
+      setDebouncedTitle(value);
+    }, 500),
+    []
+  );
 
   const handleTitleChange = (newTitle: string) => {
     setTitle(newTitle);
@@ -42,13 +43,13 @@ export default function Home() {
 
   useEffect(() => {
     fetchPostings(debouncedTitle, jobType, experienceLevel, cities);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentPage,
     debouncedTitle,
     jobType,
     experienceLevel,
-    cities,
-    fetchPostings
+    cities
   ]);
 
   return (

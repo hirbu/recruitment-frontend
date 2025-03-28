@@ -28,7 +28,8 @@ export default function MyPostings() {
     if (!userLoading && user?.id) {
       fetchPostings("", undefined, undefined, [], user.id);
     }
-  }, [currentPage, userLoading, fetchPostings, user?.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, userLoading, user?.id]);
 
   if (userLoading || postingsLoading) {
     return (
