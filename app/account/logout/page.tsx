@@ -18,7 +18,8 @@ export default function Logout() {
         await logout();
         router.push(AUTH_CONFIG.redirects.afterLogout);
       } catch (error: Error | unknown) {
-        const errorMessage = error instanceof Error ? error.message : "Logout failed.";
+        const errorMessage =
+          error instanceof Error ? error.message : "Logout failed.";
         showSnackbar(errorMessage, "error");
       }
     };

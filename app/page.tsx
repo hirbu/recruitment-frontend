@@ -31,7 +31,7 @@ export default function Home() {
     debounce((value: string) => {
       setDebouncedTitle(value);
     }, 500),
-    []
+    [],
   );
 
   const handleTitleChange = (newTitle: string) => {
@@ -44,13 +44,7 @@ export default function Home() {
   useEffect(() => {
     fetchPostings(debouncedTitle, jobType, experienceLevel, cities);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    currentPage,
-    debouncedTitle,
-    jobType,
-    experienceLevel,
-    cities
-  ]);
+  }, [currentPage, debouncedTitle, jobType, experienceLevel, cities]);
 
   return (
     <Container className="font-sans">

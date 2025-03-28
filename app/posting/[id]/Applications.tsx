@@ -24,7 +24,10 @@ const Applications = ({ posting }: ApplicationsProps) => {
         const data = await authService.getApplications(posting.id.toString());
         setApplications(data);
       } catch (error: Error | unknown) {
-        const errorMessage = error instanceof Error ? error.message : "Error fetching applications";
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : "Error fetching applications";
         showSnackbar(errorMessage, "error");
       } finally {
         setLoading(false);

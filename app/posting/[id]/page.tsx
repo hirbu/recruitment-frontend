@@ -28,7 +28,10 @@ export default async function Page({
           {posting.title}
         </h2>
 
-        <p property="description" className="my-2 text-sm whitespace-pre-wrap">
+        <p
+          property="description"
+          className="my-2 font-sans text-sm whitespace-pre-wrap"
+        >
           {posting.description.trim()}
         </p>
 

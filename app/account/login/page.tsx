@@ -30,7 +30,8 @@ const Login = () => {
 
       router.push(AUTH_CONFIG.redirects.afterLogin);
     } catch (error: Error | unknown) {
-      const errorMessage = error instanceof Error ? error.message : "Login failed";
+      const errorMessage =
+        error instanceof Error ? error.message : "Login failed";
       showSnackbar(errorMessage, "error");
     } finally {
       setLoading(false);
