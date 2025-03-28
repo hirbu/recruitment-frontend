@@ -26,7 +26,6 @@ export default function Home() {
     currentPage: pagination.current ?? 1,
   });
 
-  // Create a properly memoized debounce function
   const debouncedSetTitle = useCallback(
     debounce((value: string) => {
       setDebouncedTitle(value);

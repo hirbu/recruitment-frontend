@@ -20,8 +20,8 @@ export function usePagination(): [
   const updatePaginationWithView = (view: View): void => {
     setPagination({
       current: extractPageNumber(view["@id"] ?? "?page=1"),
-      first: extractPageNumber(view.first),
-      last: extractPageNumber(view.last),
+      first: extractPageNumber(view.first ?? "?page=1"),
+      last: extractPageNumber(view.last ?? "?page=1"),
       previous: view.previous ? extractPageNumber(view.previous) : undefined,
       next: view.next ? extractPageNumber(view.next) : undefined,
     });
