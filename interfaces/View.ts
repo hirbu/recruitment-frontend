@@ -1,7 +1,7 @@
 interface View {
-  "@id": string;
-  first: string;
-  last: string;
+  "@id"?: string;
+  first?: string;
+  last?: string;
   previous?: string;
   next?: string;
 }
