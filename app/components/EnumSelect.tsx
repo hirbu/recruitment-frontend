@@ -34,13 +34,14 @@ export function EnumSelect<T extends string>({
 
   return (
     <FormControl fullWidth>
-      <InputLabel required={true}>{label}</InputLabel>
+      <InputLabel required={required}>{label}</InputLabel>
       <Select
-        value={value || ""}
+        value={value ?? ""}
         label={label}
         required={required}
         onChange={handleChange}
         displayEmpty
+        multiple={false}
         renderValue={(selected) => {
           if (selected.length === 0) {
             return <span className="text-zinc-400">{placeholder}</span>;

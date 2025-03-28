@@ -1,6 +1,7 @@
-import Entity from "@/entities/Entity";
+import { useSnackbar } from "@/contexts/SnackbarContext";
+import Entity from "@/interfaces/Entity";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button, Divider, Modal, Snackbar, TextField } from "@mui/material";
+import { Button, Divider, Modal, TextField } from "@mui/material";
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 export interface EntityModalProps {
@@ -13,15 +14,13 @@ export function EntityModal<T extends Entity>({
   endpoint,
 }: EntityModalProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [newItem, setNewItem] = useState("");
   const [entities, setEntities] = useState<T[]>([]);
+  const { showSnackbar } = useSnackbar();
 
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
-  const handleSnackbarOpen = () => setSnackbarOpen(true);
-  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   useEffect(() => {
     if (!modalOpen) {
@@ -30,7 +29,12 @@ export function EntityModal<T extends Entity>({
 
     setLoading(true);
 
-    fetch(endpoint)
+    fetch(endpoint, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((data) => data.json())
       .then((response) => setEntities(response))
       .finally(() => setLoading(false));
@@ -52,12 +56,14 @@ export function EntityModal<T extends Entity>({
       });
 
       if (!response.ok) {
+        showSnackbar(`Failed to create ${name.toLowerCase()}.`, "error");
         return;
       }
 
       const data = await response.json();
       setEntities([...entities, data]);
       setNewItem("");
+      showSnackbar(`${name} created successfully!`, "success");
     }
   };
 
@@ -67,11 +73,12 @@ export function EntityModal<T extends Entity>({
     });
 
     if (!response.ok) {
+      showSnackbar(`Failed to delete ${name.toLowerCase()}.`, "error");
       return;
     }
 
     setEntities(entities.filter((tag) => tag.id !== id));
-    handleSnackbarOpen();
+    showSnackbar(`${name} deleted successfully!`, "success");
   };
 
   return (
@@ -86,7 +93,7 @@ export function EntityModal<T extends Entity>({
       </Button>
       <Modal open={modalOpen} onClose={handleModalClose}>
         <div className="absolute top-1/2 left-1/2 z-10 h-5/6 max-h-150 w-4/6 max-w-100 -translate-x-1/2 -translate-y-1/2 overflow-scroll rounded border border-black bg-white p-4 shadow-2xl">
-          <h2>Edit {name}</h2>
+          <h2 className="font-bold">Edit {name}</h2>
           <Divider className="pt-5" />
           <div className="mt-5">
             <TextField
@@ -119,12 +126,6 @@ export function EntityModal<T extends Entity>({
           </div>
         </div>
       </Modal>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={2000}
-        onClose={handleSnackbarClose}
-        message={`${name} deleted.`}
-      />
     </>
   );
 }

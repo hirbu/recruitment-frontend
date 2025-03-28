@@ -7,7 +7,7 @@ const Footer = () => {
         href="https://github.com/hirbu/"
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:border-b-2"
+        className="border-zinc-600 hover:border-b"
       >
         Crafted by <span className="text-blue-500">Andrei Hirbu</span>
       </a>

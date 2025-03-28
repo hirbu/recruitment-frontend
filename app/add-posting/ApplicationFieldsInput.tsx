@@ -13,19 +13,19 @@ import {
 } from "@mui/material";
 import { KeyboardEvent, useState } from "react";
 
-interface FieldsInputProps {
+interface ApplicationFieldsInputProps {
   fields: string[];
   setFields: (fields: string[]) => void;
   newField: string;
   setNewField: (newField: string) => void;
 }
 
-const FieldsInput = ({
+const ApplicationFieldsInput = ({
   fields,
   setFields,
   newField,
   setNewField,
-}: FieldsInputProps) => {
+}: ApplicationFieldsInputProps) => {
   const [editField, setEditField] = useState({ old: "", new: "" });
   const [openEditFieldModal, setOpenEditFieldModal] = useState(false);
 
@@ -202,4 +202,4 @@ const FieldsInput = ({
   );
 };
 
-export default FieldsInput;
+export default ApplicationFieldsInput;

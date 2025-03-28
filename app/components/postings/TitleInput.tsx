@@ -4,9 +4,10 @@ import { InputAdornment, TextField } from "@mui/material";
 interface TitleInputProps {
   title: string;
   setTitle: (title: string) => void;
+  required?: boolean;
 }
 
-const TitleInput = ({ title, setTitle }: TitleInputProps) => {
+const TitleInput = ({ title, setTitle, required = false }: TitleInputProps) => {
   return (
     <TextField
       label="Title"
@@ -14,7 +15,7 @@ const TitleInput = ({ title, setTitle }: TitleInputProps) => {
       placeholder="Set a title"
       value={title}
       onChange={(e) => setTitle(e.target.value)}
-      required={true}
+      required={required}
       slotProps={{
         input: {
           startAdornment: (

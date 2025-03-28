@@ -1,4 +1,4 @@
-import Entity from "@/entities/Entity";
+import Entity from "@/interfaces/Entity";
 import { useCallback, useState } from "react";
 
 interface EntityCreateProps {
@@ -24,7 +24,7 @@ export function useEntityCreate<T extends Entity>({
         const response = await fetch(endpoint, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify(data),
         });

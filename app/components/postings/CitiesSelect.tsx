@@ -1,13 +1,18 @@
 import { EntitySelect } from "@/app/components/EntitySelect";
-import City from "@/entities/City";
+import City from "@/interfaces/City";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 interface CitiesSelectProps {
   cities: City[];
   setCities: (cities: City[]) => void;
+  required?: boolean;
 }
 
-const CitiesSelect = ({ cities, setCities }: CitiesSelectProps) => {
+const CitiesSelect = ({
+  cities,
+  setCities,
+  required = false,
+}: CitiesSelectProps) => {
   return (
     <EntitySelect<City>
       value={cities}
@@ -18,7 +23,7 @@ const CitiesSelect = ({ cities, setCities }: CitiesSelectProps) => {
       placeholder="Search for cities"
       getOptionLabel={(city) => city.name}
       getOptionKey={(city) => city.id}
-      required={true}
+      required={required}
       icon={<LocationOnIcon />}
     />
   );

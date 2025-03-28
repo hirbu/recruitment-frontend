@@ -1,4 +1,4 @@
-import Entity from "@/entities/Entity";
+import Entity from "@/interfaces/Entity";
 
 interface City extends Entity {}
 

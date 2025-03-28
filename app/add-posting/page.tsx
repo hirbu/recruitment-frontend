@@ -1,21 +1,20 @@
 "use client";
 
-import JobTypeSelect from "@/app/add-posting//JobTypeSelect";
-import CitiesSelect from "@/app/add-posting/CitiesSelect";
-import DescriptionInput from "@/app/add-posting/DescriptionInput";
-import ExperienceLevelSelect from "@/app/add-posting/ExperienceLevelSelect";
-import FieldsInput from "@/app/add-posting/FieldsInput";
-import TagsModal from "@/app/add-posting/TagsModal";
-import TagsSelect from "@/app/add-posting/TagsSelect";
-import TitleInput from "@/app/add-posting/TitleInput";
-import City from "@/entities/City";
-import Tag from "@/entities/Tag";
+import ApplicationFieldsInput from "@/app/add-posting/ApplicationFieldsInput";
+import RequiredFields from "@/app/add-posting/RequiredFields";
+import { useSnackbar } from "@/contexts/SnackbarContext";
 import ExperienceLevel from "@/enums/ExperienceLevel";
 import JobType from "@/enums/JobType";
-import { Button, Chip, Container, Divider, Snackbar } from "@mui/material";
+import City from "@/interfaces/City";
+import Tag from "@/interfaces/Tag";
+import { Button, Chip, Container, Divider } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { useUser } from "../../contexts/UserContext";
 
 const AddPosting = () => {
+  const { user } = useUser();
+  const { showSnackbar } = useSnackbar();
+
   const [title, setTitle] = useState("");
   const [jobType, setJobType] = useState<JobType | undefined>(undefined);
   const [experienceLevel, setExperienceLevel] = useState<
@@ -24,45 +23,38 @@ const AddPosting = () => {
   const [cities, setCities] = useState<City[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [description, setDescription] = useState("");
+
   const [fields, setFields] = useState<string[]>([]);
   const [newField, setNewField] = useState("");
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [lastJobIdCreated, setLastJobIdCreated] = useState<number | null>(null);
-
-  const handleSnackbarOpen = () => {
-    setSnackbarOpen(true);
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    fetch("/api/postings", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        jobType,
-        experienceLevel,
-        description,
-        cities: cities.map((city) => `/api/cities/${city.id}`),
-        tags: tags.map((tag) => `/api/tags/${tag.id}`),
-        fields: JSON.stringify(fields),
-      }),
-    }).then(async (response) => {
+    const fetchData = async () => {
+      const response = await fetch("/api/postings", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          jobType,
+          experienceLevel,
+          description,
+          owner: `/api/users/${user?.id}`,
+          cities: cities.map((city) => `/api/cities/${city.id}`),
+          tags: tags.map((tag) => `/api/tags/${tag.id}`),
+          fields: JSON.stringify(fields),
+        }),
+      });
+
       if (!response.ok) {
+        showSnackbar("Failed to create posting.", "error");
         return;
       }
 
       const data = await response.json();
-      setLastJobIdCreated(data.id);
 
       setTitle("");
       setJobType(undefined);
@@ -73,81 +65,60 @@ const AddPosting = () => {
       setFields([]);
       setNewField("");
 
-      handleSnackbarOpen();
-    });
+      showSnackbar(
+        `Posting was created successfully! Click here to view it.`,
+        "success",
+        `/posting/${data.id}`,
+      );
+    };
+
+    fetchData();
   };
 
   return (
-    <>
-      <Container>
-        <form onSubmit={handleSubmit}>
-          <Divider textAlign="left">
-            <Chip label="GENERAL INFO" size="medium" />
-          </Divider>
+    <Container>
+      <form onSubmit={handleSubmit}>
+        <Divider textAlign="left">
+          <Chip label="GENERAL INFO" size="medium" />
+        </Divider>
 
-          <div className="my-5 flex flex-col gap-5">
-            <TitleInput title={title} setTitle={setTitle} />
+        <RequiredFields
+          title={title}
+          setTitle={setTitle}
+          jobType={jobType as JobType}
+          setJobType={setJobType}
+          experienceLevel={experienceLevel as ExperienceLevel}
+          setExperienceLevel={setExperienceLevel}
+          cities={cities}
+          setCities={setCities}
+          description={description}
+          setDescription={setDescription}
+          tags={tags}
+          setTags={setTags}
+        />
 
-            <JobTypeSelect jobType={jobType} setJobType={setJobType} />
+        <Divider textAlign="left">
+          <Chip label="APPLICATION INFO" size="medium" />
+        </Divider>
 
-            <ExperienceLevelSelect
-              experienceLevel={experienceLevel}
-              setExperienceLevel={setExperienceLevel}
-            />
+        <ApplicationFieldsInput
+          fields={fields}
+          setFields={setFields}
+          newField={newField}
+          setNewField={setNewField}
+        />
 
-            <CitiesSelect cities={cities} setCities={setCities} />
+        <Divider textAlign="left">
+          <Chip label="SUBMIT" size="medium" />
+        </Divider>
 
-            <DescriptionInput
-              description={description}
-              setDescription={setDescription}
-            />
-
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <div className="flex-6">
-                <TagsSelect tags={tags} setTags={setTags} />
-              </div>
-              <div className="flex-1">
-                <TagsModal />
-              </div>
-            </div>
-          </div>
-
-          <Divider textAlign="left">
-            <Chip label="APPLICATION INFO" size="medium" />
-          </Divider>
-
-          <FieldsInput
-            fields={fields}
-            setFields={setFields}
-            newField={newField}
-            setNewField={setNewField}
-          />
-
-          <Divider textAlign="left">
-            <Chip label="SUBMIT" size="medium" />
-          </Divider>
-
-          <div className="mt-5">
-            <Button type="submit" variant="contained" size="large">
-              Submit
-            </Button>
-          </div>
-        </form>
-      </Container>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={15000}
-        onClose={handleSnackbarClose}
-        onClick={() =>
-          window.open(
-            `https://localhost:8000/api/postings/${lastJobIdCreated}`,
-            "_blank",
-            "noopener,noreferrer",
-          )
-        }
-        message={`Posting was created.`}
-      />
-    </>
+        <div className="mt-5">
+          <Button type="submit" variant="contained" size="large">
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Container>
   );
 };
 

@@ -1,4 +1,4 @@
-import Entity from "@/entities/Entity";
+import Entity from "@/interfaces/Entity";
 import { useCallback, useState } from "react";
 
 interface EntitySearchProps {
@@ -31,7 +31,11 @@ export function useEntitySearch<T extends Entity>({
         const url = new URL(endpoint, window.location.origin);
         url.search = `${queryParam}=${query}`;
 
-        const response = await fetch(url.toString());
+        const response = await fetch(url.toString(), {
+          headers: {
+            Accept: "application/json",
+          },
+        });
         const data = (await response.json()) as T[];
         setResults(data);
         return data;

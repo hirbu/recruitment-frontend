@@ -1,13 +1,14 @@
 import { EntitySelect } from "@/app/components/EntitySelect";
-import Tag from "@/entities/Tag";
+import Tag from "@/interfaces/Tag";
 import LabelIcon from "@mui/icons-material/Label";
 
 interface TagsSelectProps {
   tags: Tag[];
   setTags: (tags: Tag[]) => void;
+  required?: boolean;
 }
 
-const TagsSelect = ({ tags, setTags }: TagsSelectProps) => {
+const TagsSelect = ({ tags, setTags, required = false }: TagsSelectProps) => {
   return (
     <EntitySelect<Tag>
       value={tags}
@@ -19,7 +20,7 @@ const TagsSelect = ({ tags, setTags }: TagsSelectProps) => {
       getOptionLabel={(tag) => tag.name}
       getOptionKey={(tag) => tag.id}
       icon={<LabelIcon />}
-      required={true}
+      required={required}
     />
   );
 };

@@ -5,9 +5,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 interface JobTypeSelectProps {
   jobType: JobType | undefined;
   setJobType: (value: JobType) => void;
+  required?: boolean;
 }
 
-const JobTypeSelect = ({ jobType, setJobType }: JobTypeSelectProps) => {
+const JobTypeSelect = ({
+  jobType,
+  setJobType,
+  required = false,
+}: JobTypeSelectProps) => {
   return (
     <EnumSelect
       value={jobType}
@@ -15,7 +20,7 @@ const JobTypeSelect = ({ jobType, setJobType }: JobTypeSelectProps) => {
       enumObject={JobType}
       label="Type"
       placeholder="Set a type"
-      required={true}
+      required={required}
       icon={<AccessTimeIcon />}
     ></EnumSelect>
   );

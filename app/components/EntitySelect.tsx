@@ -1,7 +1,7 @@
 "use client";
 
-import Entity from "@/entities/Entity";
 import { useEntitySearch } from "@/hooks/useEntitySearch";
+import Entity from "@/interfaces/Entity";
 import {
   Autocomplete,
   CircularProgress,

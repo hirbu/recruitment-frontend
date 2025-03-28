@@ -18,7 +18,7 @@ const NavItem = ({ title, uri, icon, onClick }: NavItemProps) => {
         onClick={onClick}
         className={`${
           pathname === uri ? "font-bold md:border-b-2" : ""
-        } flex items-end gap-1 uppercase`}
+        } flex items-start gap-1 uppercase`}
       >
         {icon}
         {title}
