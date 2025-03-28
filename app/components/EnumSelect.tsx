@@ -49,7 +49,7 @@ export function EnumSelect<T extends string>({
 
           return capitalizeWordsInString(
             Object.entries(enumObject).filter(
-              ([_, value]) => value === selected,
+              ([, value]) => value === selected,
             )[0][0],
           );
         }}

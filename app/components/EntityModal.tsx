@@ -38,7 +38,7 @@ export function EntityModal<T extends Entity>({
       .then((data) => data.json())
       .then((response) => setEntities(response))
       .finally(() => setLoading(false));
-  }, [modalOpen]);
+  }, [modalOpen, endpoint]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewItem(e.target.value);

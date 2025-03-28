@@ -22,11 +22,13 @@ export default function MyPostings() {
     currentPage: pagination.current ?? 1,
   });
 
+  const currentPage = pagination.current ?? 1;
+
   useEffect(() => {
     if (!userLoading && user?.id) {
       fetchPostings("", undefined, undefined, [], user.id);
     }
-  }, [pagination.current ?? 1, userLoading]);
+  }, [currentPage, userLoading, fetchPostings, user?.id]);
 
   if (userLoading || postingsLoading) {
     return (

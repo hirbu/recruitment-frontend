@@ -10,7 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState, SyntheticEvent } from "react";
 
 export interface SelectProps<T> {
   value: T[];
@@ -52,14 +52,14 @@ export function EntitySelect<T extends Entity>({
     },
   );
 
-  const debouncedSearch = useCallback(
-    debounce((query: string) => {
-      if (query.length >= minSearchLength) {
-        search(query);
+  const debouncedSearch = useCallback((query: string) => {
+    const delayedSearch = debounce((q: string) => {
+      if (q.length >= minSearchLength) {
+        search(q);
       }
-    }, 300),
-    [search, minSearchLength],
-  );
+    }, 300);
+    delayedSearch(query);
+  }, [search, minSearchLength]);
 
   useEffect(() => {
     if (inputValue.length >= minSearchLength) {
@@ -69,7 +69,7 @@ export function EntitySelect<T extends Entity>({
     }
   }, [inputValue, debouncedSearch, resetSearch, minSearchLength]);
 
-  const handleChange = (_: any, newValue: T[]) => {
+  const handleChange = (_: SyntheticEvent, newValue: T[]) => {
     onChange(newValue);
     setInputValue("");
     router.refresh();

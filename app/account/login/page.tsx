@@ -3,13 +3,13 @@
 import EmailInput from "@/app/account/EmailInput";
 import TestAccount from "@/app/account/login/TestAccount";
 import PasswordInput from "@/app/account/PasswordInput";
+import { AUTH_CONFIG } from "@/configs/auth";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import { useUser } from "@/contexts/UserContext";
 import LoginIcon from "@mui/icons-material/Login";
 import { Button, Chip, Container, Divider } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { AUTH_CONFIG } from "@/configs/auth";
 
 const Login = () => {
   const { showSnackbar } = useSnackbar();
@@ -29,8 +29,9 @@ const Login = () => {
       showSnackbar("Login successful!", "success");
 
       router.push(AUTH_CONFIG.redirects.afterLogin);
-    } catch (error: any) {
-      showSnackbar(error.message || "Login failed", "error");
+    } catch (error: Error | unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Login failed";
+      showSnackbar(errorMessage, "error");
     } finally {
       setLoading(false);
     }

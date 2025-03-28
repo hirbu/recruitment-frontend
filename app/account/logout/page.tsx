@@ -17,13 +17,14 @@ export default function Logout() {
       try {
         await logout();
         router.push(AUTH_CONFIG.redirects.afterLogout);
-      } catch (error: any) {
-        showSnackbar(error.message || "Logout failed.", "error");
+      } catch (error: Error | unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Logout failed.";
+        showSnackbar(errorMessage, "error");
       }
     };
 
     handleLogout();
-  }, []);
+  }, [logout, router, showSnackbar]);
 
   return (
     <Container className="flex h-[50vh] flex-col items-center justify-center">

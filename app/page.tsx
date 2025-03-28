@@ -26,26 +26,29 @@ export default function Home() {
     currentPage: pagination.current ?? 1,
   });
 
-  const debouncedSetTitle = useCallback(
-    debounce((value: string) => {
-      setDebouncedTitle(value);
-    }, 500),
-    [],
-  );
+  const debouncedSetTitle = useCallback((value: string) => {
+    const delayedUpdate = debounce((val: string) => {
+      setDebouncedTitle(val);
+    }, 500);
+    delayedUpdate(value);
+  }, []);
 
   const handleTitleChange = (newTitle: string) => {
     setTitle(newTitle);
     debouncedSetTitle(newTitle);
   };
 
+  const currentPage = pagination.current ?? 1;
+
   useEffect(() => {
     fetchPostings(debouncedTitle, jobType, experienceLevel, cities);
   }, [
-    pagination.current ?? 1,
+    currentPage,
     debouncedTitle,
     jobType,
     experienceLevel,
     cities,
+    fetchPostings
   ]);
 
   return (

@@ -23,15 +23,16 @@ const Applications = ({ posting }: ApplicationsProps) => {
       try {
         const data = await authService.getApplications(posting.id.toString());
         setApplications(data);
-      } catch (error: any) {
-        showSnackbar(error.message || "Error fetching applications", "error");
+      } catch (error: Error | unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Error fetching applications";
+        showSnackbar(errorMessage, "error");
       } finally {
         setLoading(false);
       }
     };
 
     fetchApplications();
-  }, []);
+  }, [posting.id, showSnackbar]);
 
   return (
     <div className="my-5">
