@@ -1,6 +1,6 @@
 import Footer from "@/app/components/layout/footer/Footer";
 import Header from "@/app/components/layout/header/Header";
-import { monoFont, sansFont } from "@/configs/fonts";
+import { sansFont } from "@/configs/fonts";
 import icons from "@/configs/icons";
 import theme from "@/configs/theme";
 import { SnackbarProvider } from "@/contexts/SnackbarContext";
@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${sansFont.variable} ${monoFont.variable} bg-zinc-50 font-mono antialiased`}
-      >
+      <body className={`${sansFont.variable} bg-zinc-50 font-mono antialiased`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />

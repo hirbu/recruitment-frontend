@@ -22,7 +22,7 @@ const TestAccount = ({ setEmail, setPassword }: TestAccountProps) => {
         className="mb-3 cursor-pointer hover:underline"
         onClick={handleClick}
       >
-        You can use a test account to login.
+        You can use a test account to login. Click me to fill it out. 🖱️
       </button>
     </Alert>
   );
