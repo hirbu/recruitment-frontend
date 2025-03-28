@@ -19,7 +19,7 @@ const TestAccount = ({ setEmail, setPassword }: TestAccountProps) => {
     <Alert severity="info" className="my-7">
       <AlertTitle>Welcome 👋</AlertTitle>
       <button
-        className="mb-3 cursor-pointer hover:underline"
+        className="mb-3 cursor-pointer text-start hover:underline"
         onClick={handleClick}
       >
         You can use a test account to login. Click me to fill it out. 🖱️
