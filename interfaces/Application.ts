@@ -4,8 +4,8 @@ interface Application {
   fields: string;
   resume: {
     id: number;
+    extra: string;
   };
-  score: number;
   createdAt: string;
 }
 

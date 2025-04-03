@@ -1,8 +1,8 @@
+import Resume from "@/app/posting/[id]/Resume";
 import ApplicationInterface from "@/interfaces/Application";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import StarIcon from "@mui/icons-material/Star";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, Divider } from "@mui/material";
 import moment from "moment";
 
 interface ApplicationProps {
@@ -18,26 +18,30 @@ const Application = ({ application }: ApplicationProps) => {
           size="small"
           icon={<AccessTimeIcon fontSize="small" />}
         />
-
-        <Chip
-          label={`Score: ${application.score}`}
-          size="small"
-          icon={<StarIcon fontSize="small" />}
-        />
       </div>
 
       <h3 className="my-2 text-xl font-bold">{application.name}</h3>
+
+      <Divider textAlign="left">
+        <Chip label="ANSWERS" size="small" />
+      </Divider>
 
       <ul className="mb-3">
         {Object.entries(
           JSON.parse(application.fields) as Record<string, string>,
         ).map(([key, value]) => (
           <li key={key} className="mb-2 flex flex-col">
-            <strong>{key}</strong>
-            <span>{value}</span>
+            <span>{key}</span>
+            <strong>{value}</strong>
           </li>
         ))}
       </ul>
+
+      <Divider textAlign="left">
+        <Chip label="AI ANALYSIS" size="small" />
+      </Divider>
+
+      <Resume resumeString={application.resume.extra} />
 
       <Button
         size="small"

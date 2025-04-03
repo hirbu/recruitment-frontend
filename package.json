@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "pnpm prettier . --write ."
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

@@ -1,5 +1,7 @@
 "use client";
 
+import AlreadyApplied from "@/app/posting/[id]/AlreadyApplied";
+import ResumeFileInput from "@/app/posting/[id]/ResumeFileInput";
 import { useSnackbar } from "@/contexts/SnackbarContext";
 import Posting from "@/interfaces/Posting";
 import FormatColorTextIcon from "@mui/icons-material/FormatColorText";
@@ -12,13 +14,16 @@ import {
   TextField,
 } from "@mui/material";
 import { FormEvent, useState } from "react";
-import ResumeFileInput from "./ResumeFileInput";
 
 interface NewApplicationProps {
   posting: Posting;
 }
 
 const NewApplication = ({ posting }: NewApplicationProps) => {
+  if (localStorage.getItem(`applied[${posting.id}]`)) {
+    return <AlreadyApplied />;
+  }
+
   const { showSnackbar } = useSnackbar();
   const fields =
     typeof posting.fields === "string"
@@ -63,6 +68,7 @@ const NewApplication = ({ posting }: NewApplicationProps) => {
       setResume("");
       setFieldsValues(initialFieldValues);
       showSnackbar("Applied successfully", "success");
+      localStorage.setItem(`applied[${posting.id}]`, "true");
     });
   };
 
