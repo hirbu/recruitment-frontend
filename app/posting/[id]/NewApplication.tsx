@@ -20,10 +20,6 @@ interface NewApplicationProps {
 }
 
 const NewApplication = ({ posting }: NewApplicationProps) => {
-  if (localStorage.getItem(`applied[${posting.id}]`)) {
-    return <AlreadyApplied />;
-  }
-
   const { showSnackbar } = useSnackbar();
   const fields =
     typeof posting.fields === "string"
@@ -42,6 +38,10 @@ const NewApplication = ({ posting }: NewApplicationProps) => {
   const [fieldsValues, setFieldsValues] = useState<{ [key: string]: string }>(
     initialFieldValues,
   );
+
+  if (localStorage.getItem(`applied[${posting.id}]`)) {
+    return <AlreadyApplied />;
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -27,9 +27,11 @@ export default function Home() {
   });
 
   const debouncedSetTitle = useCallback(
-    debounce((value: string) => {
-      setDebouncedTitle(value);
-    }, 500),
+    (value: string) => {
+      debounce(() => {
+        setDebouncedTitle(value);
+      }, 500);
+    },
     [],
   );
 
